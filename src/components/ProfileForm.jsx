@@ -20,11 +20,8 @@ function ProfileForm() {
   //     setUserData({ ...userData, [name]: value });
   //   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    console.log(`Name: ${name}, Value: ${value}`);
+  const handleChange = (name, value) => {
     setUserData((prevUserData) => {
-      console.log("Previous UserData:", prevUserData);
       return { ...prevUserData, [name]: value };
     });
   };
@@ -59,62 +56,60 @@ function ProfileForm() {
           create additional user after registration
         </Typography>
       </Box>
-      <form>
-        <div style={inputStyle}>
-          <TextField
-            label="First Name"
-            type="text"
-            placeholder="Input Your First Name"
-            name="firstName"
-            value={userData.firstName}
-            onChange={handleChange}
-          />
-          <TextField
-            label="Last Name"
-            type="text"
-            placeholder="Input Your Last Name"
-            name="lastName"
-            value={userData.lastName}
-            onChange={handleChange}
-          />
-        </div>
-        <div style={inputStyle}>
-          <TextField
-            label="Email"
-            type="email"
-            placeholder="Input Your Email"
-            name="email"
-            value={userData["email"]}
-            onChange={handleChange}
-          />
-          <TextField
-            label="Phone Number"
-            type="text"
-            placeholder="Input Your Phone Number"
-            name="phoneNumber"
-            value={userData["phoneNumber"]}
-            onChange={handleChange}
-          />
-        </div>
-        <div style={inputStyle}>
-          <TextField
-            label="Password"
-            type="password"
-            placeholder="Create Password"
-            name="password"
-            value={userData["password"]}
-            onChange={handleChange}
-          />
-          <TextField
-            label="Confirm Password"
-            type="password"
-            placeholder="Confirm Password"
-            name="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </div>
-      </form>
+      <div style={inputStyle}>
+        <TextField
+          label="First Name"
+          type="text"
+          placeholder="Input Your First Name"
+          name="firstName"
+          value={userData.firstName}
+          onChange={(e) => handleChange("firstName", e.target.value)}
+        />
+        <TextField
+          label="Last Name"
+          type="text"
+          placeholder="Input Your Last Name"
+          name="lastName"
+          value={userData.lastName}
+          onChange={(e) => handleChange("lastName", e.target.value)}
+        />
+      </div>
+      <div style={inputStyle}>
+        <TextField
+          label="Email"
+          type="email"
+          placeholder="Input Your Email"
+          name="email"
+          value={userData.email}
+          onChange={(e) => handleChange("email", e.target.value)}
+        />
+        <TextField
+          label="Phone Number"
+          type="text"
+          placeholder="Input Your Phone Number"
+          name="phoneNumber"
+          value={userData.phoneNumber}
+          onChange={(e) => handleChange("phoneNumber", e.target.value)}
+        />
+      </div>
+      <div style={inputStyle}>
+        <TextField
+          label="Password"
+          type="password"
+          placeholder="Create Password"
+          name="password"
+          value={userData.password}
+          onChange={(e) => handleChange("password", e.target.value)}
+        />
+        <TextField
+          label="Confirm Password"
+          type="password"
+          placeholder="Confirm Password"
+          name="confirmPassword"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+      </div>
     </div>
   );
 }

@@ -1,14 +1,16 @@
+import { Typography } from "@mui/material";
 import React, { useEffect, useState, useRef } from "react";
 
 function Stepper({ steps, currentStep }) {
   const [newStep, setNewStep] = useState([]);
-  const stepRef = useRef();
+  const stepsRef = useRef();
 
   const updateStep = (stepNumber, steps) => {
     const newSteps = [...steps];
     let count = 0;
     while (count < newSteps.length) {
-      if (count == stepNumber) {
+      //current step
+      if (count === stepNumber) {
         newSteps[count] = {
           ...newSteps[count],
           highlighted: true,
@@ -16,7 +18,10 @@ function Stepper({ steps, currentStep }) {
           completed: true,
         };
         count++;
-      } else if (count < stepNumber) {
+      }
+
+      //step completed
+      else if (count < stepNumber) {
         newSteps[count] = {
           ...newSteps[count],
           highlighted: false,
@@ -24,7 +29,9 @@ function Stepper({ steps, currentStep }) {
           completed: true,
         };
         count++;
-      } else {
+      }
+      //step pending
+      else {
         newSteps[count] = {
           ...newSteps[count],
           highlighted: false,
@@ -34,86 +41,114 @@ function Stepper({ steps, currentStep }) {
         count++;
       }
     }
+
     return newSteps;
   };
+
   useEffect(() => {
-    const stepState = steps.map((step, index) => {
+    const stepsState = steps.map((step, index) =>
       Object.assign(
         {},
         {
           description: step,
           completed: false,
-          highlited: (index = 0 ? true : false),
-          selected: (index = 0 ? true : false),
+          highlighted: index === 0 ? true : false,
+          selected: index === 0 ? true : false,
         }
-      );
-    });
-    stepRef.current = stepState;
-    const current = updateStep(currentStep - 1, stepRef.current);
+      )
+    );
+
+    stepsRef.current = stepsState;
+    const current = updateStep(currentStep - 1, stepsRef.current);
     setNewStep(current);
   }, [steps, currentStep]);
 
-  const displaySteps = newStep.map((step, index) => {
+  const stepsDisplay = newStep.map((step, index) => {
     return (
-      <div
-        key={index}
-        className={
-          index != newStep.length - 1
-            ? "d-flex w-full  align-items-center"
-            : "d-flex align-items-center"
-        }
-      >
-        <div class="d-flex flex-column align-items-center">
-          <div style={{ display: "flex" }}></div>
-          <div
-            // className={`rounded-full transition duration-500 ease-in-out border-2 border-gray-300 h-12 w-12 d-flex align-item-center justify-content-center py-3 ${
-            //   step.selected
-            //     ? "bg-green-600 text-white font-bold border border-green-600"
-            //     : ""
-            // }`}
-            // class="rounded-circle transition duration-500 ease-in-out border border-secondary d-flex align-items-center justify-content-center py-3 px-4"
-            // // style="width: 48px; height: 48px;"
-
-            className={`rounded-10 border border-${
-              step.selected ? "success" : "light"
-            } d-flex align-items-center justify-content-center py-3 ${
-              step.selected
-                ? "bg-gradient-primary text-back-900 font-weight-bold"
-                : ""
-            }`}
-          >
+      <div key={index} style={{ width: "80%" }}>
+        <div>
+          <div>
             {step.completed ? (
-              <span class="text-white font-weight-bold h1">&#10003;</span>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingBottom: "12px",
+                  paddingTop: "12px",
+                  // borderRadius: "0 30px 30px 0",
+                  boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                }}
+                class={`${step.selected}
+            ? "col-6  bg-info text-white p-3"
+            : ""`}
+              >
+                <Typography
+                  sx={{
+                    width: "30px",
+                    height: "30px",
+                    borderRadius: "50%",
+                    backgroundColor: "white",
+                    color: "#BEC8E9",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginRight: "10px",
+                  }}
+                >
+                  {index + 1}
+                </Typography>
+
+                <Typography sx={{ color: "white" }}>
+                  {step.description}
+                </Typography>
+              </div>
             ) : (
-              index + 1
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingBottom: "12px",
+                  paddingTop: "12px",
+                }}
+              >
+                <Typography
+                  sx={{
+                    width: "30px",
+                    height: "30px",
+                    borderRadius: "50%",
+                    backgroundColor: "#BEC8E9",
+                    color: "white",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginRight: "10px",
+                  }}
+                >
+                  {index + 1}
+                </Typography>{" "}
+                <Typography sx={{ color: "#BEC8E9" }}>
+                  {step.description}
+                </Typography>
+              </div>
             )}
           </div>
-          <div
-            className={`position-absolute top-0 text-center mt-16 w-32 text-uppercase ${
-              step.highlighted ? "text-dark" : "text-secondary"
-            }`}
-          >
-            {step.description}
-          </div>
         </div>
-        <div
-          className={`flex-grow-1 border-top-2 transition border-${
-            step.completed ? "success" : "light"
-          }`}
-        ></div>
       </div>
     );
   });
+
   return (
     <div
       style={{
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: "space-around",
         alignContent: "center",
-        padding: "4px",
+        backgroundColor: "#EDEEFD",
       }}
     >
-      {displaySteps}
+      {stepsDisplay}
     </div>
   );
 }

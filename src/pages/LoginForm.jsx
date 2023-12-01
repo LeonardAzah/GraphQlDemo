@@ -6,6 +6,7 @@ import AddUserForm from "../components/AddUserForm";
 import SteperControl from "../components/SteperControl";
 import { StepperContext } from "../contexts/StepperContext";
 import { Paper } from "@mui/material";
+const steps = ["Your Profile", "Business Information", "Additional Users"];
 
 function LoginForm() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -29,7 +30,6 @@ function LoginForm() {
     direction == "next" ? newStep++ : newStep--;
     newStep > 0 && newStep <= steps.length && setCurrentStep(newStep);
   };
-  const steps = ["Your Profile", "Business Information", "Additional Users"];
   return (
     <div>
       <Paper
@@ -38,13 +38,11 @@ function LoginForm() {
           width: "65%",
           margin: "0 auto",
           marginTop: "24px",
-          borderRadius: "8px",
+          borderRadius: "10px",
           paddingBottom: "3rem",
         }}
       >
-        <div>
-          <Stepper steps={steps} currentStep={currentStep} />
-        </div>
+        <Stepper steps={steps} currentStep={currentStep} />
         <div style={{ paddingTop: "28px" }}>
           <StepperContext.Provider
             value={{
