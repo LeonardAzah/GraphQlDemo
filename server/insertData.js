@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Product = require("./models/Product");
 
 mongoose.connect(
-  "mongodb+srv://mongotut:testing123@cluster0.hisj3ar.mongodb.net/shop_assessment_db"
+  process.env.MONGO_URI
 );
 
 const products = [
